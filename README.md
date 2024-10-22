@@ -102,7 +102,7 @@ Now when we modify our .java files and save them, our application will automatic
 
 First, let's add the following dependency to our `pom.xml`:
 
-💡 **Note:** Make sure to rebuild the project. Automatic restart will not reflect the newly added dependency!
+💡 **Note:** Make sure to stop and re-run to rebuild the project. Automatic restart will not reflect the newly added dependency!
 
 ```xml
     <dependency>
