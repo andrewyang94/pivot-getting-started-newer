@@ -88,7 +88,9 @@ Add the following to the `pom.xml`:
 
 Create a run configuration with the following `Before launch` tasks:
 
-![dev-tools-configuration](.github/assets/dev-tools-configuration.png)
+![dev-tools-run-configuration](.github/assets/dev-tools-run-configuration.png)
+
+> 💡 **Note:** Developer tools are automatically disabled when running a fully packaged application. If your application is launched using java -jar or if it’s started using a special classloader, then it is considered a “production application”. Flagging the dependency as optional in Maven or using compileOnly in Gradle is a best practice that prevents devtools from being transitively applied to other modules using your project.
 
 ### Connecting to the Atoti Server
 
