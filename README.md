@@ -86,9 +86,11 @@ Add the following to the `pom.xml`:
 </dependencies>
 ```
 
-Create a run configuration with the following `Before launch` tasks:
+Create a run configuration with the following `Before launch` tasks and VM options:
 
 ![dev-tools-run-configuration](.github/assets/dev-tools-run-configuration.png)
+
+Notice that we've refrained from invoking `java -jar` in our VM options when setting our run configuration. This is because of the following:
 
 > 💡 **Note:** Developer tools are automatically disabled when running a fully packaged application. If your application is launched using java -jar or if it’s started using a special classloader, then it is considered a “production application”. Flagging the dependency as optional in Maven or using compileOnly in Gradle is a best practice that prevents devtools from being transitively applied to other modules using your project.
 
