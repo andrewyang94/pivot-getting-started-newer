@@ -129,6 +129,12 @@
       <version>${activepivot.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.activeviam.tech</groupId>
+      <artifactId>datastore-schema-printer</artifactId>
+      <version>6.1.0</version>
+      <scope>compile</scope>
+    </dependency>
 
   </dependencies>
 

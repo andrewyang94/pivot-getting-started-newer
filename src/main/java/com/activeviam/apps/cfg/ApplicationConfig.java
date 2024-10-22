@@ -64,5 +64,6 @@ public class ApplicationConfig {
         /* *********************************************** */
         activePivotManager.init(null);
         activePivotManager.start();
+        System.out.println("HELLO, I AM TESTING HERE!");
     }
 }

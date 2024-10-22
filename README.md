@@ -90,13 +90,59 @@ Create a run configuration with the following `Before launch` tasks and VM optio
 
 ![dev-tools-run-configuration](.github/assets/dev-tools-run-configuration.png)
 
-Notice that we've refrained from invoking `java -jar` in our VM options when setting our run configuration. This is because of the following:
+Notice that we've refrained from invoking `java -jar` in our VM options when setting our IDE run configuration. This is because of the following note in the [Spring Boot docs](https://docs.spring.io/spring-boot/docs/1.5.16.RELEASE/reference/html/using-boot-devtools.html#using-boot-devtools):
 
-> 💡 **Note:** Developer tools are automatically disabled when running a fully packaged application. If your application is launched using java -jar or if it’s started using a special classloader, then it is considered a “production application”. Flagging the dependency as optional in Maven or using compileOnly in Gradle is a best practice that prevents devtools from being transitively applied to other modules using your project.
+> 💡 **Note:** Developer tools are automatically disabled when running a fully packaged application. If your application is launched using `java -jar` or if it’s started using a special classloader, then it is considered a “production application”. Flagging the dependency as optional in Maven or using compileOnly in Gradle is a best practice that prevents devtools from being transitively applied to other modules using your project.
 
 Now when we modify our .java files and save them, our application will automatically restart and reflect the changes.
 
 ![dev-tools-example.gif](.github/assets/dev-tools-example.gif)
+
+### Visualizing Datastore Schema
+
+First, let's add the following dependency to our `pom.xml`:
+
+```xml
+    <dependency>
+      <groupId>com.activeviam.tech</groupId>
+      <artifactId>datastore-schema-printer</artifactId>
+      <version>6.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+```
+
+Then, in `src/main/java/com/activeviam/apps/cfg/source/InitialCsvLoad.java`, we can add the following:
+
+```java
+    @EventListener(value = ApplicationReadyEvent.class)
+    void onApplicationReady() {
+      log.info("ApplicationReadyEvent triggered");
+      initialLoad();
+      showDatastoreSchema();
+    }
+
+    public void showDatastoreSchema() {
+        new JungSchemaPrinter(false).print("Training datastore", datastore);
+    }
+```
+
+As well as amend `src/main/java/com/activeviam/apps/AtotiSpringBootApplication.java`:
+
+```java
+public class AtotiSpringBootApplication {
+    public static void main(String[] args) {
+        //        SpringApplication.run(AtotiSpringBootApplication.class, args);
+        var application = new SpringApplication(AtotiSpringBootApplication.class);
+        // this is useful if we want to display the data store schema in the awt window
+        application.setHeadless(false);
+        application.run(args);
+    }
+}
+```
+
+We can now visualize the schema of our datastores.
+
+![datastore-visualization](.github/assets/datastore-visualization.png)
 
 ### Connecting to the Atoti Server
 

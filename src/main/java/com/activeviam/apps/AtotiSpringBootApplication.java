@@ -14,6 +14,10 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @ConfigurationPropertiesScan
 public class AtotiSpringBootApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AtotiSpringBootApplication.class, args);
+        //        SpringApplication.run(AtotiSpringBootApplication.class, args);
+        var application = new SpringApplication(AtotiSpringBootApplication.class);
+        // this is useful if we want to display the data store schema in the awt window
+        application.setHeadless(false);
+        application.run(args);
     }
 }
