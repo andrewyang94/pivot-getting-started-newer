@@ -72,7 +72,7 @@ We provide two run configurations: `AtotiSpringBootApplication` and `AtotiSpring
 
 ### Spring Boot Developer Tools
 
-For development purposes, we recommend using the `spting-boot-devtools` module to enable live reload.
+For development purposes, we recommend using the `spring-boot-devtools` module to enable [automatic restart](https://docs.spring.io/spring-boot/docs/1.5.16.RELEASE/reference/html/using-boot-devtools.html#using-boot-devtools-restart).
 
 Add the following to the `pom.xml`:
 
