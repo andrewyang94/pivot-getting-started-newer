@@ -24,7 +24,21 @@ it and get a cube up and running in a few minutes.
 - Atoti jar files (commercial software)
 - Running the application requires a license for the Atoti software.
 
-Clone or download this repository and run `mvn clean install`. This will generate a jar file, which can be run using
+First, clone or download this repository.
+
+Make sure to set your artifactory credentials in the maven `settings.xml`:
+
+```xml
+<servers>
+    <server>
+        <id>ActiveViamInternalRepository</id>
+        <username>aya</username>
+        <password>API_TOKEN</password>
+    </server>
+</servers>
+```
+
+Then, run `mvn clean install`. This will generate a jar file in the `target` folder, which can be run using
 standard java commands.
 
 **Note:** If your build is unsuccessful, try skipping tests: `mvn clean install -DskipTests`
@@ -42,19 +56,39 @@ Add the following
 argument `-Dactiveviam.chunkAllocatorKey=mmap` to your JVM, so it then becomes:
 
 ```bash
-java -Dactiveviam.chunkAllocatorKey=mmap -Dfile.trades=<absolute path of trades.csv> -jar <fat jar path>
+java -Dactiveviam.chunkAllocatorKey=mmap -Dfile.trades=<absolute path of trades.csv> -jar <absolute path of fat jar path>
 ```
 
-**Note:** If unable to start the Atoti Spring Boot application, you may need to add some additional arguments as
+**Note:** If unable to start the Atoti Spring Boot application, you may need to add some additional VM arguments as
 well, try the following:
 
 ```bash
-java --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED -Dactiveviam.chunkAllocatorKey=mmap -Dfile.trades=<absolute path of trades.csv> -jar <fat jar path>
+java --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED -Dactiveviam.chunkAllocatorKey=mmap -Dfile.trades=<absolute path of trades.csv> -jar <absolute path of fat jar path>
 ```
 
 ### Running from the IDE
 
-We provide two run configuratios: `AtotiSpringBootApplication` and `AtotiSpringBootApplicationOTEL` for IntelliJ.
+We provide two run configurations: `AtotiSpringBootApplication` and `AtotiSpringBootApplicationOTEL` for IntelliJ.
+
+### Spring Boot Developer Tools
+
+For development purposes, we recommend using the `spting-boot-devtools` module to enable live reload.
+
+Add the following to the `pom.xml`:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <optional>true</optional>
+    </dependency>
+</dependencies>
+```
+
+Create a run configuration with the following `Before launch` tasks:
+
+![dev-tools-configuration](.github/assets/dev-tools-configuration.png)
 
 ### Connecting to the Atoti Server
 
