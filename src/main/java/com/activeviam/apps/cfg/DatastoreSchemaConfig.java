@@ -16,8 +16,10 @@ import java.util.LinkedList;
 
 import org.springframework.context.annotation.Configuration;
 
+import com.activeviam.activepivot.core.datastore.api.builder.StartBuilding;
 import com.activeviam.activepivot.server.spring.api.config.IDatastoreSchemaDescriptionConfig;
 import com.activeviam.apps.constants.StoreAndFieldConstants;
+import com.activeviam.database.api.types.ILiteralType;
 import com.activeviam.database.datastore.api.description.IDatastoreSchemaDescription;
 import com.activeviam.database.datastore.api.description.IReferenceDescription;
 import com.activeviam.database.datastore.api.description.IStoreDescription;
@@ -45,10 +47,24 @@ public class DatastoreSchemaConfig implements IDatastoreSchemaDescriptionConfig 
         return Collections.emptyList();
     }
 
+    private IStoreDescription createProductsStoreDescription() {
+        return StartBuilding.store()
+                .withStoreName("PRODUCTS")
+                .withField("PRODUCTS_PRODUCT_ID", ILiteralType.INT)
+                .asKeyField()
+                .withField("PRODUCTS_PRODUCT_NAME", ILiteralType.STRING)
+                .withField("PRODUCTS_PRODUCT_CATEGORY", ILiteralType.STRING)
+                .withField("PRODUCTS_SUPPLIER", ILiteralType.STRING)
+                .withField("PRODUCTS_PURCHASING_PRICE_PER_UNIT", DOUBLE)
+                .build();
+    }
+
     @Override
     public IDatastoreSchemaDescription datastoreSchemaDescription() {
         var stores = new LinkedList<IStoreDescription>();
         stores.add(createTradesStoreDescription());
+        stores.add(createProductsStoreDescription());
+
 
         return new DatastoreSchemaDescription(stores, references());
     }
